@@ -1,0 +1,55 @@
+Hi, i've had 3 requests/moans recently from friends who want to learn how to make 
+multi-client server applications. well, all server applications have the same mainframe. 
+
+so i have written some nice code for a very efficent mainframe for a multi-client chat server.
+
+i have written lots and lots of comments into the code, so it should all be pretty straight forward.
+
+Please note, if your going to be using my source-code in you project then please give me some credit for it.
+
+						- Pirotic
+
+
+Extra Info
+==========
+just remembered all my friends are idiots so you'll probably need a better explanation of how it works... so here we are.
+
+the way a server works is complex so bare with me.
+
+all the users connect on the same port, such as 6667. now most people wonder
+how on earth you get more than 1 connection on a port. well, you can't.
+
+you can however transfere the connection request to another port. which can
+then accept the connection.
+
+so what i have done is create an array of socks (winsock), now. the first
+sock in this array, sock(0), is the main one which everybody connects to.
+so i set the local port as the server_port (in the settings.bas) and set
+it to listen for connections.
+
+now when it get a connection request it looks though all the other socks in its array.
+at first their wont be any more (as it saves memory). but what it does is it checks if there is an un-used socket, is their is it'll connect them on that, but if their are no sockets left.(and the maximum number of clients hasn't been met) then it'll create a new socket in the array to accomidate the new user.
+
+now, we need to store infomation of all the clients. 
+
+so i created a new array called clients, their is 1 for each possible client (it uses the max_clients value in the settings.bas)
+
+in here i have only included the basic variables, such as socket (this is the array nunber of the socket they are connected to), time connected and idle_time. obviously
+you add your own values for the type of server your are doing. this information is
+the client-information. and the number of the array they are using is called the ClientID.
+
+so when somebody connects not only does it find them a port. but it also finds a clientID that isnt in use (as its either unused, or its previous user has disconnected)
+
+so once a client connects they'll be given a clientID and a socket. now for the engine to work you need to be able to find out one from the other. so the socket information is kept in the client_information part. as 'socket' (which is a interger). and the tag
+of the socket they are using is set to the ClientID. 
+
+All things such as server-full messages have been done. and whenever a user disconnects it automatically blanks all the infomation so it can be used again.
+
+so all whats left to do is ADD (not change) new code to suite your server.
+
+erm.. read the source code. that explains it all quite well. if you still ned help
+then mail me at :
+
+  			Pirotic@hotmail.com
+
+hope this helped. 
